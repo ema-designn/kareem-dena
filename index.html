@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>كريم &amp; دينا | Save The Date</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f6efe1;          
+    --panel:#fbf6ec;          
+    --ink:#2c2619;
+    --ink-soft:#655b48;
+    --gold:#b7924f;
+    --gold-deep:#9a7940;
+    --gold-soft:#e7d8b7;
+    --near-black:#181410;
+    --line:#e2d2ab;
+
+    --script:'Mrs Saint Delafield', cursive;
+    --en-display:'Playfair Display', serif;
+    --en-body:'Cormorant Garamond', serif;
+    --ar-display:'Aref Ruqaa', serif;
+    --ar-body:'Tajawal', sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--ar-body);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  body.lang-en{direction:ltr;}
+  body.lang-ar{direction:rtl;}
+  body.lang-ar .en-only{display:none;}
+  body.lang-en .ar-only{display:none;}
+
+  img{max-width:100%; display:block;}
+  .wrap{max-width:520px; margin:0 auto; position:relative; background:var(--cream);}
+
+  section{position:relative; padding:64px 30px; text-align:center;}
+
+  /* ---- shared heading / label styles ---- */
+  h1,h2,h3,.heading{
+    font-family:var(--ar-display); font-weight:400;
+    letter-spacing:.5px; color:var(--ink);
+  }
+  body.lang-en h1, body.lang-en h2, body.lang-en h3, body.lang-en .heading{
+    font-family:var(--en-display); letter-spacing:.3px;
+  }
+  h2{font-size:27px; margin-bottom:10px;}
+  body.lang-en h2{font-size:29px;}
+
+  .eyebrow{
+    font-size:11px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--gold-deep); font-family:var(--en-body); margin-bottom:10px; font-weight:600;
+  }
+  body.lang-ar .eyebrow{font-family:var(--ar-body); letter-spacing:1px; font-size:12px;}
+
+  .divider{width:60px; height:1px; background:var(--gold); margin:20px auto; opacity:.8;}
+
+  .section-sub{font-size:13.5px; color:var(--ink-soft); line-height:1.9; max-width:340px; margin:0 auto;}
+
+  .rule-break{
+    max-width:520px; margin:0 auto; display:flex; align-items:center; gap:12px;
+    padding:0 60px; color:var(--gold);
+  }
+  .rule-break .ln{flex:1; height:1px; background:var(--line);}
+  .rule-break svg{width:12px; height:12px;}
+
+  /* ---------- INTRO OVERLAY (فيديو الغلاف والشمعة) ---------- */
+  body.intro-active {
+    overflow: hidden; /* لمنع التمرير أثناء عرض الغلاف */
+  }
+  #intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: var(--near-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #intro-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  #intro-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #video-cover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  /* ---------- TOP LANGUAGE TOGGLE ---------- */
+  .lang-switch-wrap {
+    position: fixed; top: 20px; right: 20px; z-index: 999;
+    direction: ltr; 
+    display: flex; align-items: center;
+    background: rgba(30,26,20,.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 30px; padding: 4px; cursor: pointer;
+  }
+  .lang-pill-bg {
+    position: absolute; top: 4px; bottom: 4px;
+    background: #fff; border-radius: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    transition: left .3s ease, right .3s ease, width .3s ease;
+    z-index: 1;
+  }
+  body.lang-en .lang-pill-bg { left: 4px; right: auto; width: 46px; }
+  body.lang-ar .lang-pill-bg { left: auto; right: 4px; width: 58px; }
+  .lang-switch-wrap span {
+    position: relative; z-index: 2;
+    display: block; padding: 8px 16px;
+    font-size: 12.5px; font-weight: 700; letter-spacing: .5px;
+    color: rgba(255,255,255,.85); font-family: var(--en-body);
+    transition: color .3s ease;
+  }
+  .lang-switch-wrap .ar-text { font-family: var(--ar-body); }
+  body.lang-en .lang-switch-wrap .en-text { color: var(--ink); }
+  body.lang-ar .lang-switch-wrap .ar-text { color: var(--ink); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    height:100vh; min-height:680px; padding:60px 26px 40px;
+    display:flex; flex-direction:column; align-items:center;
+    background:linear-gradient(160deg,#2d3324,#1a2015);
+    color:#f4ecd8;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0; z-index:1;
+    background:linear-gradient(180deg, rgba(10,12,8,.32) 0%, rgba(10,12,8,.55) 45%, rgba(6,8,5,.78) 100%);
+  }
+  .hero-video{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
+  }
+  .hero .hero-content, .hero .today, .hero .scroll-note{position:relative; z-index:2;}
+  .hero-content{margin-top:auto; margin-bottom:auto; padding-top:14vh;}
+  .hero .script{
+    font-family:var(--script); font-size:54px; color:#fbf6ea; line-height:1; margin-bottom:16px;
+    text-shadow:0 2px 18px rgba(0,0,0,.35);
+  }
+  .hero .we-are{font-size:11px; letter-spacing:5px; text-transform:uppercase; color:#e7dcc0; margin-bottom:24px; font-family:var(--en-body);}
+  .hero .names{font-family:var(--en-body); font-style:italic; font-weight:500; font-size:54px; line-height:1.25; color:#fbf6ea; letter-spacing:.5px;}
+  body.lang-ar .hero .names{font-family:var(--ar-display); font-style:normal; font-weight:400; font-size:44px;}
+  .hero .amp{font-family:var(--script); font-size:28px; display:block; margin:2px 0; color:var(--gold-soft);}
+  .hero .hairline{width:80px; height:1px; background:rgba(255,255,255,.5); margin:24px auto 16px;}
+  .hero .date-line{font-family:var(--en-body); letter-spacing:2px; font-size:15px; color:#f1e8d2;}
+  .hero .venue{font-size:11px; letter-spacing:4px; color:#cdbf9a; margin-top:6px;}
+  .hero .today{margin-top:auto; padding-top:10vh; font-family:var(--script); font-size:30px; color:#fbf6ea;}
+  .hero .scroll-note{
+    position:absolute; bottom:26px; left:0; right:0; text-align:center;
+    font-size:10px; letter-spacing:4px; color:#e7dcc0; text-transform:uppercase;
+    animation:bob 2.2s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+  .leaves-fall{ position: fixed; inset: 0; pointer-events: none; z-index: 4; overflow: hidden; }
+  .leaves-fall .leaf{
+    position: absolute; top: -8vh; width: 20px; height: 20px;
+    color: var(--gold-deep); opacity: .5;
+    animation-name: leafFall, leafSway;
+    animation-timing-function: linear, ease-in-out;
+    animation-iteration-count: infinite, infinite;
+  }
+  .leaves-fall .l1{ left: 8%;  width: 16px; height: 16px; animation-duration: 19s, 3.6s; animation-delay: 0s, 0s; }
+  .leaves-fall .l2{ left: 27%; width: 22px; height: 22px; animation-duration: 24s, 4.2s; animation-delay: -6s, -1s; }
+  .leaves-fall .l3{ left: 52%; width: 15px; height: 15px; animation-duration: 21s, 3.2s; animation-delay: -12s, -2s; }
+  .leaves-fall .l4{ left: 71%; width: 19px; height: 19px; animation-duration: 26s, 4.8s; animation-delay: -3s, -.5s; }
+  .leaves-fall .l5{ left: 90%; width: 17px; height: 17px; animation-duration: 22s, 3.9s; animation-delay: -9s, -1.5s; }
+  @keyframes leafFall{
+    0%{ top: -8vh; transform: rotate(0deg); }
+    100%{ top: 108vh; transform: rotate(340deg); }
+  }
+  @keyframes leafSway{
+    0%, 100%{ margin-left: 0; }
+    50%{ margin-left: 22px; }
+  }
+
+  .music-fab{
+    position: fixed; bottom: 20px; left: 20px; z-index: 999;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: rgba(30,26,20,.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.28);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0;
+  }
+  body.lang-ar .music-fab{ left: auto; right: 20px; }
+  .music-fab-disc{
+    width: 30px; height: 30px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, var(--gold-soft) 0%, var(--gold) 55%, var(--gold-deep) 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--near-black); box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    animation: spinDisc 5s linear infinite; animation-play-state: paused;
+  }
+  .music-fab-disc svg{ width: 14px; height: 14px; }
+  .music-fab.playing .music-fab-disc{ animation-play-state: running; }
+  @keyframes spinDisc{ from{ transform: rotate(0deg); } to{ transform: rotate(360deg); } }
+
+  /* ---------- INVITATION ---------- */
+  .invite{
+    background:url('wall.jpg') center/cover no-repeat;
+  }
+  .invite .heart-mark{font-size:18px; color:var(--gold); margin-bottom:16px;}
+  .invite .hosts{font-family:var(--ar-display); font-size:19px; line-height:1.9; color:var(--ink); margin-bottom:26px;}
+  body.lang-en .invite .hosts{font-family:var(--en-display); font-size:19px; font-weight:500;}
+  .invite .lead{font-size:14px; color:var(--ink-soft); line-height:2; margin-bottom:6px;}
+  .invite .occasion{font-size:12px; color:var(--ink-soft); margin-bottom:14px;}
+  .invite .couple-names{font-family:var(--ar-display); font-size:42px; color:var(--gold-deep); margin:12px 0 20px;}
+  body.lang-en .invite .couple-names{font-family:var(--script); font-size:50px;}
+  .invite .body-text{font-size:14px; line-height:2.1; color:var(--ink-soft); max-width:380px; margin:0 auto 30px;}
+  .btn-ghost{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--ar-display); font-size:17px; color:var(--gold-deep); background:transparent;
+    border:1px solid var(--gold); border-radius:30px; padding:12px 26px; cursor:pointer;
+  }
+  body.lang-en .btn-ghost{font-family:var(--en-display); font-size:16px;}
+  .btn-ghost svg{width:15px; height:15px;}
+
+  /* ---------- STORY & GIFT CARDS ---------- */
+  .story-card, .gift-card {
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:42px 28px; margin-bottom:20px;
+  }
+  .gift-card { padding:50px 32px; }
+  .icon-circle{
+    width:50px; height:50px; border-radius:50%; border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:var(--gold);
+  }
+  .icon-circle svg{width:19px; height:19px;}
+  .story-card .title, .gift-card .title {font-size:21px; margin-bottom:14px;}
+  .gift-card .title {font-size:24px; margin:12px 0 14px;}
+  .story-card p, .gift-card p {font-size:14px; line-height:2.1; color:var(--ink-soft);}
+  .gift-card p {max-width:340px; margin:0 auto;}
+
+  /* ---------- QURAN VERSE ---------- */
+  .verse-section{background:var(--panel); padding:80px 24px; color:var(--ink);}
+  .verse-frame{border:1px solid var(--gold); padding:32px 22px; position:relative; max-width:400px; margin:0 auto;}
+  .verse-frame::before, .verse-frame::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold);}
+  .verse-frame::before{top:-1px; inset-inline-start:-1px; border-inline-end:none; border-bottom:none;}
+  .verse-frame::after{bottom:-1px; inset-inline-end:-1px; border-inline-start:none; border-top:none;}
+  .quran-text{font-family:var(--ar-display); font-size:20px; line-height:2.3; color:var(--ink);}
+  body.lang-en .quran-text{font-family:var(--en-display); font-size:18px; font-style:italic; line-height:1.9;}
+  .verse-ref{margin-top:16px; font-size:13px; color:var(--ink-soft);}
+  .verse-diamond{width:60px; margin:0 auto 28px; display:flex; align-items:center; gap:10px; color:var(--gold);}
+  .verse-diamond .l1, .verse-diamond .l2{flex:1; height:1px; background:var(--gold);}
+
+  /* ---------- COUNTDOWN ---------- */
+  .countdown-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; max-width:420px; margin:0 auto 40px;}
+  .cd-box{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px 4px;}
+  .cd-box .num{font-family:var(--en-display); font-size:26px; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .cd-box .lbl{font-size:11px; color:var(--ink-soft); margin-top:4px;}
+
+  .venue-card{background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; text-align:start; padding-bottom:14px;}
+  .venue-card img{height:180px; width:100%; object-fit:cover;}
+  .venue-card .venue-name{font-size:21px; text-align:center; padding:22px 16px 8px;}
+  .venue-card .divider{margin-top:0;}
+  .info-row{display:flex; align-items:center; gap:14px; background:var(--cream); border-radius:8px; padding:14px 16px; margin:12px 16px;}
+  .info-row .ic{width:34px; height:34px; border-radius:50%; background:var(--panel); display:flex; align-items:center; justify-content:center; color:var(--gold); flex-shrink:0;}
+  .info-row .ic svg{width:16px; height:16px;}
+  .info-row .txt{text-align:start;}
+  .info-row .txt .k{font-size:11px; color:var(--gold-deep); margin-bottom:2px;}
+  .info-row .txt .v{font-size:14px; color:var(--ink);}
+
+  /* ---------- MAP ---------- */
+  .map-frame{border:6px solid var(--panel); border-radius:10px; overflow:hidden; box-shadow:0 10px 26px rgba(60,45,10,.1);}
+  .map-frame iframe{width:100%; height:250px; border:0; display:block;}
+  .map-btn{
+    margin-top:20px; display:inline-flex; align-items:center; gap:8px;
+    background:linear-gradient(155deg, var(--gold-soft), var(--gold)); color:#fff;
+    padding:13px 32px; border-radius:30px; font-size:14px; text-decoration:none; font-family:var(--ar-body);
+    box-shadow:0 6px 16px rgba(150,115,50,.28);
+  }
+
+  /* ---------- PROGRAM ---------- */
+  .timeline{max-width:380px; margin:36px auto 0; text-align:start; position:relative; padding-inline-start:26px;}
+  .timeline::before{content:""; position:absolute; inset-inline-start:6px; top:8px; bottom:8px; width:1px; background:var(--line);}
+  .t-item{position:relative; padding-bottom:50px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{content:""; position:absolute; inset-inline-start:-26px; top:6px; width:9px; height:9px; border-radius:50%; background:var(--gold);}
+  .t-time{display:inline-block; font-family:var(--en-body); font-size:13px; letter-spacing:1px; color:var(--gold-deep); border:1px solid var(--gold); border-radius:20px; padding:5px 16px; margin-bottom:12px;}
+  .t-title{font-size:19px; margin-bottom:8px;}
+  .t-item p{font-size:14px; color:var(--ink-soft); line-height:1.9;}
+
+  /* ---------- RSVP ---------- */
+  .rsvp-form{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:32px 26px; text-align:start; margin-top:28px;}
+  .field{margin-bottom:20px;}
+  .field label{display:block; font-size:12px; color:var(--ink-soft); margin-bottom:8px;}
+  .field input[type=text], .field textarea{
+    width:100%; border:none; border-bottom:1px solid var(--line); background:transparent; padding:10px 2px;
+    font-size:15px; font-family:var(--ar-body); color:var(--ink); outline:none;
+  }
+  body.lang-en .field input, body.lang-en .field textarea{font-family:var(--en-body); font-size:16px;}
+  .field textarea{resize:vertical; min-height:64px; border:1px solid var(--line); border-radius:6px; padding:12px;}
+  .attend-options{display:flex; gap:10px;}
+  .attend-btn{
+    flex:1; padding:12px 6px; border:1px solid var(--line); border-radius:8px; background:var(--cream);
+    font-size:13px; color:var(--ink-soft); cursor:pointer; font-family:var(--ar-body); transition:.2s;
+  }
+  .attend-btn.selected{border-color:var(--gold); background:var(--gold-soft); color:var(--gold-deep); font-weight:700;}
+  .submit-btn{
+    width:100%; background:linear-gradient(155deg, var(--gold-soft), var(--gold)); color:#fff; border:none;
+    padding:15px; border-radius:8px; font-size:15px; letter-spacing:1px; cursor:pointer; margin-top:4px;
+    font-family:var(--ar-body); box-shadow:0 6px 16px rgba(150,115,50,.28);
+  }
+  body.lang-en .submit-btn{font-family:var(--en-body); font-weight:600;}
+  .rsvp-thanks{margin-top:50px; font-family:var(--ar-display); font-size:16px; color:var(--ink-soft); line-height:2;}
+  body.lang-en .rsvp-thanks{font-family:var(--en-display);}
+
+  /* ---------- CLOSING ---------- */
+  .quote-block{padding-top:20px;}
+  .quote-mark{font-family:Georgia, serif; font-size:42px; color:var(--gold); line-height:1;}
+  .quote-ar{font-family:var(--ar-display); font-size:19px; line-height:2.1; color:var(--ink); max-width:360px; margin:12px auto 18px;}
+  body.lang-en .quote-ar{font-family:var(--en-display); font-style:italic; font-size:18px;}
+  .quote-by{font-size:12px; color:var(--gold-deep);}
+
+  .closing-black{background:var(--near-black); color:#f4ecd8; padding:56px 26px; text-align:center;}
+  .closing-black .names{font-family:var(--ar-display); font-size:36px; color:#f8f1de; margin-bottom:12px;}
+  body.lang-en .closing-black .names{font-family:var(--script); font-size:44px;}
+  .closing-black .divider{background:var(--gold);}
+  .closing-black .meta{font-size:13px; color:#cdbf9a; letter-spacing:1px; margin-top:10px; font-family:var(--en-body);}
+  body.lang-ar .closing-black .meta{font-family:var(--ar-body); letter-spacing:0;}
+
+  footer.foot{text-align:center; padding:24px; font-size:11px; background:var(--near-black); color:#8a8064;}
+
+  @media(max-width:380px){
+    .hero .names{font-size:42px;}
+    .hero .script{font-size:44px;}
+    .cd-box .num{font-size:21px;}
+  }
+</style>
+</head>
+<body class="lang-en intro-active">
+
+  <!-- ============ INTRO VIDEO & VIDEO COVER ============ -->
+  <div id="intro-overlay">
+    <video id="intro-video" playsinline>
+      <source src="emaa.mp4" type="video/mp4">
+    </video>
+    <!-- تم استبدال الشمعة بالصورة التي طلبتها لتعمل كغلاف للفيديو -->
+    <img id="video-cover" src="screen.jpg" alt="اضغط لفتح الدعوة">
+  </div>
+
+  <!-- ============ FALLING LEAVES (decorative) ============ -->
+  <div class="leaves-fall" aria-hidden="true">
+    <svg class="leaf l1" viewBox="0 0 26 46"><path d="M13 2C4 12 2 26 13 44C24 26 22 12 13 2Z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M13 7C13 18 13 30 13 40" stroke="currentColor" stroke-width="0.9"/><path d="M13 16 L8 12M13 16 L18 12M13 26 L7.5 22M13 26 L18.5 22M13 34 L9 31M13 34 L17 31" stroke="currentColor" stroke-width="0.6"/></svg>
+    <svg class="leaf l2" viewBox="0 0 26 46"><path d="M13 2C4 12 2 26 13 44C24 26 22 12 13 2Z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M13 7C13 18 13 30 13 40" stroke="currentColor" stroke-width="0.9"/><path d="M13 16 L8 12M13 16 L18 12M13 26 L7.5 22M13 26 L18.5 22M13 34 L9 31M13 34 L17 31" stroke="currentColor" stroke-width="0.6"/></svg>
+    <svg class="leaf l3" viewBox="0 0 26 46"><path d="M13 2C4 12 2 26 13 44C24 26 22 12 13 2Z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M13 7C13 18 13 30 13 40" stroke="currentColor" stroke-width="0.9"/><path d="M13 16 L8 12M13 16 L18 12M13 26 L7.5 22M13 26 L18.5 22M13 34 L9 31M13 34 L17 31" stroke="currentColor" stroke-width="0.6"/></svg>
+    <svg class="leaf l4" viewBox="0 0 26 46"><path d="M13 2C4 12 2 26 13 44C24 26 22 12 13 2Z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M13 7C13 18 13 30 13 40" stroke="currentColor" stroke-width="0.9"/><path d="M13 16 L8 12M13 16 L18 12M13 26 L7.5 22M13 26 L18.5 22M13 34 L9 31M13 34 L17 31" stroke="currentColor" stroke-width="0.6"/></svg>
+    <svg class="leaf l5" viewBox="0 0 26 46"><path d="M13 2C4 12 2 26 13 44C24 26 22 12 13 2Z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M13 7C13 18 13 30 13 40" stroke="currentColor" stroke-width="0.9"/><path d="M13 16 L8 12M13 16 L18 12M13 26 L7.5 22M13 26 L18.5 22M13 34 L9 31M13 34 L17 31" stroke="currentColor" stroke-width="0.6"/></svg>
+  </div>
+
+<div class="wrap">
+
+  <!-- ============ TOP LANGUAGE TOGGLE ============ -->
+  <div class="lang-switch-wrap" id="langSwitch" aria-label="switch language">
+    <div class="lang-pill-bg"></div>
+    <span class="en-text">EN</span>
+    <span class="ar-text">عربي</span>
+  </div>
+
+  <!-- ============ FLOATING MUSIC BUTTON ============ -->
+  <button class="music-fab" id="soundBtn" aria-label="toggle music">
+    <div class="music-fab-disc">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    </div>
+  </button>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="">
+      <source src="duck.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-content">
+      <div class="script ar-only">تاريخ يُحفظ</div>
+      <div class="script en-only">Save The Date</div>
+
+      <div class="we-are ar-only" style="font-family:var(--ar-body); letter-spacing:2px;">سنتزوج قريبًا</div>
+      <div class="we-are en-only">We Are Getting Married</div>
+
+      <div class="names">
+        <span class="ar-only">كريم</span>
+        <span class="en-only">Karim</span>
+        <span class="amp">&amp;</span>
+        <span class="ar-only">دينا</span>
+        <span class="en-only">Dina</span>
+      </div>
+
+      <div class="hairline"></div>
+      <div class="date-line">
+        <span class="ar-only">الجمعة &nbsp;·&nbsp; ٢٥ ديسمبر ٢٠٢٦</span>
+        <span class="en-only">Friday &nbsp;·&nbsp; 25 December 2026</span>
+      </div>
+      <div class="venue"> 
+        <span class="ar-only">قاعة ون فيو</span>
+        <span class="en-only">ONE VIEW</span>
+      </div>
+    </div>
+
+    <div class="today">
+      <span class="ar-only" style="font-family:var(--ar-display); font-size:26px;">اليوم هو اليوم</span>
+      <span class="en-only">Today is the day</span>
+    </div>
+
+    <div class="scroll-note">
+      <span class="ar-only">مرر لأسفل</span>
+      <span class="en-only">Scroll</span>
+    </div>
+  </section>
+
+  <!-- مسار الأغنية التي طلبتها -->
+  <audio id="bgAudio" loop preload="none">
+    <source src="muu.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ============ INVITATION CARD ============ -->
+  <section class="invite" id="invite">
+    <div class="heart-mark">♡</div>
+    <div class="hosts">
+      <span class="ar-only">يتشرف كلٌّ من<br>السيد محمد جودة &amp; السيد إسماعيل الدحدوح</span>
+      <span class="en-only">Honored to invite you<br>Mr. Mohamed Gouda &amp; Mr. Ismail El-Dahdouh</span>
+    </div>
+    <div class="divider"></div>
+    <p class="lead">
+      <span class="ar-only">بدعوتكم لمشاركتهم مساءً مليئًا بالحب والدفء والفرح،</span>
+      <span class="en-only">Invite you to share an evening full of love, warmth and joy,</span>
+    </p>
+    <p class="occasion">
+      <span class="ar-only">بمناسبة زفاف ابنيهما</span>
+      <span class="en-only">on the occasion of the wedding of their children</span>
+    </p>
+    <div class="couple-names">
+      <span class="ar-only">كريم &amp; دينا</span>
+      <span class="en-only">Karim &amp; Dina</span>
+    </div>
+    <p class="body-text">
+      <span class="ar-only">ننتظر بشوق أن نحتفل بهذه البداية الجميلة محاطين بأعزّ الناس إلى قلوبنا.</span>
+      <span class="en-only">We eagerly await celebrating this beautiful beginning surrounded by those dearest to our hearts.</span>
+    </p>
+    <button class="btn-ghost" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 20c8-1 13-6 14-14-8 1-13 6-14 14z"/></svg>
+      <span class="ar-only"> ما كتب لنا  </span>
+      <span class="en-only">  written for us  </span>
+    </button>
+  </section>
+
+  <div class="rule-break"><span class="ln"></span><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/></svg><span class="ln"></span></div>
+
+  <!-- ============ STORY & GIFT CARDS COMBINED ============ -->
+  <section class="story-section" id="story">
+    <div class="story-card">
+      <div class="icon-circle">♡</div>
+      <div class="eyebrow"><span class="ar-only">البداية</span><span class="en-only">The Beginning</span></div>
+      <div class="title heading"><span class="ar-only">قلبان... حكايةٌ واحدة</span><span class="en-only">Two Hearts... One Story</span></div>
+      <div class="divider"></div>
+      <p>
+        <span class="ar-only">منذ أن التقت أرواحُنا، تغيّر معنى الأيام، وأصبح لكلّ لحظةٍ نبضٌ أجمل. طريقان التقيا، ليُكملا معًا رحلةً واحدة، عنوانها الحب، ونهايتها بدايةٌ لعمرٍ بأكمله.</span>
+        <span class="en-only">From the moment our souls found each other, every day became more beautiful. Two paths met as one, beginning a journey written with love and destined to last a lifetime.</span>
+      </p>
+    </div>
+
+    <div class="story-card">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9 1.2 7-6.2-3.5-6.2 3.5 1.2-7-5-4.9 7.1-.7L12 2z"/></svg>
+      </div>
+      <div class="eyebrow"><span class="ar-only">الوعد</span><span class="en-only">The Promise</span></div>
+      <div class="title heading"><span class="ar-only">وعدٌ إلى الأبد</span><span class="en-only">A Promise Forever</span></div>
+      <div class="divider"></div>
+      <p>
+        <span class="ar-only">لم تكن كلمة «نعم» مجرد إجابة... بل كانت وعدًا من القلب، وعهدًا بالمحبّة، وبدايةَ حياةٍ نختار فيها بعضنا، في كل يوم، مدى العمر.</span>
+        <span class="en-only">"Yes" was never just a word. It was a promise from the heart, a vow of endless love, and the beginning of a lifetime spent choosing each other, every single day.</span>
+      </p>
+    </div>
+
+    <div class="gift-card">
+      <div class="icon-circle" style="margin-bottom:8px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M3 12h18"/><path d="M12 8v13"/><path d="M12 8C9 8 8 6.5 8 5a2 2 0 0 1 4 0 2 2 0 0 1 4 0c0 1.5-1 3-4 3z"/></svg>
+      </div>
+      <div class="eyebrow"><span class="ar-only">إلى الأبد</span><span class="en-only">Forever</span></div>
+      <div class="title heading"><span class="ar-only">يوم زفافنا</span><span class="en-only">Our Wedding Day</span></div>
+      <p>
+        <span class="ar-only">واليوم نبدأ رحلتنا الأبدية — ويشرّفنا أن تكونوا بجانبنا في بدايتها.</span>
+        <span class="en-only">Today we begin our forever journey — and we would be honored to have you by our side at its start.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ QURAN VERSE ============ -->
+  <section class="verse-section">
+    <div class="verse-diamond"><span class="l1"></span>◆<span class="l2"></span></div>
+    <div class="verse-frame">
+      <p class="quran-text">
+        <span class="ar-only">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</span>
+        <span class="en-only">"And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy."</span>
+      </p>
+      <div class="verse-ref">
+        <span class="ar-only">الروم: ٢١</span>
+        <span class="en-only">Ar-Rum : 21</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COUNTDOWN + DETAILS ============ -->
+  <section class="countdown-section">
+    <h2><span class="ar-only">العد التنازلي</span><span class="en-only">Countdown</span></h2>
+    <p class="section-sub" style="margin-bottom:32px;">
+      <span class="ar-only">بانتظار اللحظة السعيدة التي يجمعنا بها القدر بكل حب...</span>
+      <span class="en-only">Counting down to the happy moment destiny brings us together, with all our love...</span>
+    </p>
+
+    <div class="countdown-grid" id="countdown">
+      <div class="cd-box"><div class="num" id="cd-days">00</div><div class="lbl"><span class="ar-only">يوم</span><span class="en-only">Days</span></div></div>
+      <div class="cd-box"><div class="num" id="cd-hours">00</div><div class="lbl"><span class="ar-only">ساعة</span><span class="en-only">Hours</span></div></div>
+      <div class="cd-box"><div class="num" id="cd-mins">00</div><div class="lbl"><span class="ar-only">دقيقة</span><span class="en-only">Min</span></div></div>
+      <div class="cd-box"><div class="num" id="cd-secs">00</div><div class="lbl"><span class="ar-only">ثانية</span><span class="en-only">Sec</span></div></div>
+    </div>
+
+    <h3 style="margin-bottom:6px;"><span class="ar-only">تفاصيل الاحتفال</span><span class="en-only">Celebration Details</span></h3>
+    <p class="section-sub" style="margin-bottom:24px;">
+      <span class="ar-only">كل ما تحتاج لمعرفته لمشاركتنا فرحتنا</span>
+      <span class="en-only">Everything you need to know to join our joy</span>
+    </p>
+
+    <div class="venue-card">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="venue">
+      <div class="venue-name heading">
+        <span class="ar-only">قاعة ون فيو</span>
+        <span class="en-only">One View Hall</span>
+      </div>
+      <div class="divider"></div>
+
+      <div class="info-row">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+        <div class="txt">
+          <div class="k"><span class="ar-only">العنوان</span><span class="en-only">Address</span></div>
+          <div class="v"><span class="ar-only">نادي الشرطة - أكتوبر (جولدن فيو)</span><span class="en-only">Police Club, October (Golden View)</span></div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></div>
+        <div class="txt">
+          <div class="k"><span class="ar-only">التاريخ</span><span class="en-only">Date</span></div>
+          <div class="v"><span class="ar-only">الجمعة، 25 ديسمبر 2026</span><span class="en-only">Friday, 25 December 2026</span></div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div class="txt">
+          <div class="k"><span class="ar-only">الوقت</span><span class="en-only">Time</span></div>
+          <div class="v"><span class="ar-only">من 7:30 مساءً حتى 12:00 صباحًا</span><span class="en-only">7:30 PM – 12:00 AM</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MAP ============ -->
+  <section class="map-section">
+    <h3 style="margin-bottom:20px;">
+      <span class="ar-only">نادي الشرطة — أكتوبر (جولدن فيو)</span>
+      <span class="en-only">Police Club — October (Golden View)</span>
+    </h3>
+    <div class="map-frame">
+      <iframe
+        src="https://www.google.com/maps?q=%D9%86%D8%A7%D8%AF%D9%8A%20%D8%A7%D9%84%D8%B4%D8%B1%D8%B7%D8%A9%20%D8%A7%D9%83%D8%AA%D9%88%D8%A8%D8%B1%20%D8%AC%D9%88%D9%84%D8%AF%D9%86%20%D9%81%D9%8A%D9%88&output=embed"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+    <a class="map-btn" href="https://maps.app.goo.gl/637oiyaBL4N5Bz7c7?g_st=iw" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      <span class="ar-only">افتح الخريطة</span>
+      <span class="en-only">Open Map</span>
+    </a>
+  </section>
+
+  <!-- ============ PROGRAM ============ -->
+  <section class="program-section">
+    <h2><span class="ar-only">برنامج الحفل</span><span class="en-only">Celebration Program</span></h2>
+    <p class="section-sub">
+      <span class="ar-only">يسعدنا أن تشاركونا كل لحظة من يومنا</span>
+      <span class="en-only">We'd be delighted if you shared every moment of our day</span>
+    </p>
+
+    <div class="timeline">
+      <div class="t-item">
+        <span class="t-time">PM 7:30</span>
+        <div class="t-title heading"><span class="ar-only">بداية المراسم والاستقبال</span><span class="en-only">Ceremony &amp; Reception Begin</span></div>
+        <p>
+          <span class="ar-only">نفتح الأبواب ترحيبًا بقلوبكم الدافئة لمشاركتنا أولى لحظات الفرح.</span>
+          <span class="en-only">We open our doors to welcome your warm hearts to share our first moments of joy.</span>
+        </p>
+      </div>
+      <div class="t-item">
+        <span class="t-time">AM 12:00</span>
+        <div class="t-title heading"><span class="ar-only">ختام الحفل</span><span class="en-only">Celebration Ends</span></div>
+        <p>
+          <span class="ar-only">نودعكم بكامل المودة على أمل أن تظل ذكريات ليلتنا منقوشة بقلوبكم.</span>
+          <span class="en-only">We bid you farewell with all our affection, hoping the memories of our night stay etched in your hearts.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RSVP ============ -->
+  <section class="rsvp-section">
+    <h2 style="margin-bottom: 28px; line-height: 1.4;">
+      <span class="ar-only">يرجى تأكيد حضوركم،<br>ردّكم يعني لنا الكثير.</span>
+      <span class="en-only">Please confirm your attendance,<br>your reply means so much to us.</span>
+    </h2>
+
+    <form class="rsvp-form" id="rsvpForm">
+      <div class="field">
+        <label><span class="ar-only">اسمك</span><span class="en-only">Your Name</span></label>
+        <input type="text" id="rsvpName" required>
+      </div>
+
+      <div class="field">
+        <label><span class="ar-only">هل ستشاركوننا الفرح؟</span><span class="en-only">Will you join our celebration?</span></label>
+        <div class="attend-options">
+          <button type="button" class="attend-btn" data-value="no">
+            <span class="ar-only">✕ نعتذر عن الحضور</span><span class="en-only">✕ Can't attend</span>
+          </button>
+          <button type="button" class="attend-btn selected" data-value="yes">
+            <span class="ar-only">✓ نعم بكلّ سرور</span><span class="en-only">✓ Joyfully yes</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span class="ar-only">رسالة (اختياري)</span><span class="en-only">Message (optional)</span></label>
+        <textarea id="rsvpMsg"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <span class="ar-only">إرسال</span><span class="en-only">Send</span>
+      </button>
+    </form>
+
+    <div class="rsvp-thanks">
+      <span class="ar-only">من القلب<br>تهاني للعروسين</span>
+      <span class="en-only">From the heart<br>Congratulations to the couple</span>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING ============ -->
+  <section class="closing-section">
+    <p class="section-sub">
+      <span class="ar-only">كونوا أول من يترك تهنئة.</span>
+      <span class="en-only">Be the first to leave a wish.</span>
+    </p>
+
+    <div class="quote-block">
+      <div class="quote-mark">"</div>
+      <p class="quote-ar">
+        <span class="ar-only">الحبّ أن تجد بيتك في قلب من تحب، وتبقى فيه إلى الأبد.</span>
+        <span class="en-only">Love is finding your home in the heart of the one you love, and remaining there forever.</span>
+      </p>
+      <div class="divider"></div>
+      <div class="quote-by"><span class="ar-only">— دعاء للعروسين</span><span class="en-only">— A prayer for the newlyweds</span></div>
+    </div>
+  </section>
+
+  <div class="closing-black">
+    <div class="names">
+      <span class="ar-only">كريم &amp; دينا</span>
+      <span class="en-only">Karim &amp; Dina</span>
+    </div>
+    <div class="divider"></div>
+    <div class="meta">
+      <span class="ar-only">الجمعة ٢٥ ديسمبر ٢٠٢٦ — قاعة ون فيو</span>
+      <span class="en-only">Friday 25 December 2026 — One View Hall</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* =============== GLOBAL LANGUAGE TOGGLE =============== */
+function setLang(lang){
+  document.body.classList.remove('lang-ar','lang-en');
+  document.body.classList.add('lang-' + lang);
+  document.documentElement.lang = lang;
+}
+let currentLang = 'en';
+document.getElementById('langSwitch').addEventListener('click', ()=>{
+  currentLang = currentLang === 'ar' ? 'en' : 'ar';
+  setLang(currentLang);
+});
+setLang('en');
+
+/* =============== BACKGROUND MUSIC =============== */
+const audio = document.getElementById('bgAudio');
+const soundBtn = document.getElementById('soundBtn');
+let isPlaying = false;
+
+// دالة تشغيل الأغنية التي يمكن مناداتها في أي وقت
+function startBackgroundAudio() {
+  if (!isPlaying) {
+    audio.play().then(() => { 
+      isPlaying = true; 
+      soundBtn.classList.add('playing'); 
+    }).catch(e => console.log("Audio play error:", e));
+  }
+}
+
+// تشغيل الأغنية يدويا من الزر
+soundBtn.addEventListener('click', (e)=>{
+  e.stopPropagation(); // منع تفعيل الضغطة على باقي الصفحة
+  if(!isPlaying){
+    startBackgroundAudio();
+  }else{
+    audio.pause();
+    isPlaying = false;
+    soundBtn.classList.remove('playing');
+  }
+});
+
+// إضافة الحدث العالمي لضمان تشغيل الأغنية مع أول لمسة في أي مكان في الشاشة لتجاوز حماية أجهزة الايفون
+document.body.addEventListener('click', startBackgroundAudio, { once: true });
+
+/* =============== INTRO VIDEO & VIDEO COVER LOGIC =============== */
+const introOverlay = document.getElementById('intro-overlay');
+const introVideo = document.getElementById('intro-video');
+const videoCover = document.getElementById('video-cover');
+
+videoCover.addEventListener('click', (e) => {
+  e.stopPropagation(); // منع تفعيل الضغطة المزدوجة
+
+  // إخفاء الصورة فوراً لتعمل كغلاف يختفي بدون أنيميشن
+  videoCover.style.display = 'none';
+  
+  // تشغيل فيديو الجواب
+  introVideo.play().catch(e => console.log("Video play error:", e));
+  
+  // تشغيل الموسيقى فوراً مع هذه الضغطة لتكون متزامنة
+  startBackgroundAudio();
+});
+
+introVideo.addEventListener('ended', () => {
+  // إخفاء الغلاف فورًا وبدون أي تلاشي (fade) لتفادي ظهور خلفيته السوداء بين الفيديو والموقع
+  introOverlay.style.transition = 'none';
+  introOverlay.classList.add('hidden');
+  document.body.classList.remove('intro-active');
+});
+
+/* =============== COUNTDOWN =============== */
+const WEDDING_DATE = new Date('2026-12-25T19:30:00+02:00').getTime();
+function updateCountdown(){
+  const now = new Date().getTime();
+  let diff = WEDDING_DATE - now;
+  if(diff < 0) diff = 0;
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const secs = Math.floor((diff % (1000*60)) / 1000);
+  document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+  document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
+  document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+
+/* =============== RSVP ATTEND TOGGLE =============== */
+document.querySelectorAll('.attend-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.attend-btn').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+  });
+});
+
+/* =============== RSVP SUBMIT -> WHATSAPP =============== */
+document.getElementById('rsvpForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('rsvpName').value.trim();
+  const msg = document.getElementById('rsvpMsg').value.trim();
+  const attending = document.querySelector('.attend-btn.selected').dataset.value === 'yes';
+  const isAr = document.body.classList.contains('lang-ar');
+
+  let text;
+  if(isAr){
+    text = `تأكيد حضور حفل زفاف كريم و دينا%0Aالاسم: ${name}%0Aالحضور: ${attending ? 'نعم بكل سرور' : 'نعتذر عن الحضور'}` + (msg ? `%0Aرسالة: ${msg}` : '');
+  }else{
+    text = `RSVP - Karim & Dina Wedding%0AName: ${name}%0AAttending: ${attending ? 'Joyfully yes' : "Can't attend"}` + (msg ? `%0AMessage: ${msg}` : '');
+  }
+  const phone = '971509151873';
+  window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+});
+</script>
+</body>
+</html>
