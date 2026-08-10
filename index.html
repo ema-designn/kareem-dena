@@ -351,10 +351,9 @@
 
   <!-- ============ INTRO VIDEO & VIDEO COVER ============ -->
   <div id="intro-overlay">
-    <video id="intro-video" playsinline preload="auto">
-      <source src="emaa.mp4" type="video/mp4">
+    <video id="intro-video" playsinline muted preload="auto">
+      <source src="koky.mp4" type="video/mp4">
     </video>
-    <!-- تم استبدال الشمعة بالصورة التي طلبتها لتعمل كغلاف للفيديو -->
     <img id="video-cover" src="screen.jpg" alt="اضغط لفتح الدعوة">
   </div>
 
@@ -426,7 +425,7 @@
     </div>
   </section>
 
-  <!-- مسار الأغنية التي طلبتها -->
+  <!-- مسار الأغنية -->
   <audio id="bgAudio" loop preload="auto">
     <source src="muu.mp3" type="audio/mpeg">
   </audio>
@@ -708,7 +707,7 @@ const audio = document.getElementById('bgAudio');
 const soundBtn = document.getElementById('soundBtn');
 let isPlaying = false;
 
-// دالة تشغيل الأغنية التي يمكن مناداتها في أي وقت
+// دالة تشغيل الأغنية المخصصة للايفون
 function startBackgroundAudio() {
   if (!isPlaying) {
     audio.play().then(() => { 
@@ -720,7 +719,7 @@ function startBackgroundAudio() {
 
 // تشغيل الأغنية يدويا من الزر
 soundBtn.addEventListener('click', (e)=>{
-  e.stopPropagation(); // منع تفعيل الضغطة على باقي الصفحة
+  e.stopPropagation();
   if(!isPlaying){
     startBackgroundAudio();
   }else{
@@ -730,33 +729,31 @@ soundBtn.addEventListener('click', (e)=>{
   }
 });
 
-// إضافة الحدث العالمي لضمان تشغيل الأغنية مع أول لمسة في أي مكان في الشاشة لتجاوز حماية أجهزة الايفون
-document.body.addEventListener('click', startBackgroundAudio, { once: true });
-
 /* =============== INTRO VIDEO & VIDEO COVER LOGIC =============== */
 const introOverlay = document.getElementById('intro-overlay');
 const introVideo = document.getElementById('intro-video');
 const videoCover = document.getElementById('video-cover');
 
-videoCover.addEventListener('click', (e) => {
-  e.stopPropagation(); // منع تفعيل الضغطة المزدوجة
-
-  // تشغيل الموسيقى أولاً وبشكل متزامن مباشرة مع الدوسة (أهم حاجة لأجهزة الايفون)
+// دالة الضغط على صورة الغلاف
+function handleCoverInteraction(e) {
+  e.stopPropagation(); 
+  
+  // تشغيل الموسيقى فوراً
   startBackgroundAudio();
 
   // تشغيل فيديو الجواب
   introVideo.play().catch(e => console.log("Video play error:", e));
+}
 
-  // ملحوظة: الصورة تفضل ظاهرة كغلاف لحد ما الفيديو يبقى جاهز فعليًا ويعرض أول فريم منه
-  // (شوفي مستمع 'playing' تحت) عشان نتفادى ظهور الخلفية السودا بين اختفاء الصورة وظهور الفيديو
-});
+// دعم الكليك واللمس الفوري لضمان العمل على الآيفون بدون تأخير
+videoCover.addEventListener('click', handleCoverInteraction);
+videoCover.addEventListener('touchstart', handleCoverInteraction, { passive: true });
 
 introVideo.addEventListener('playing', () => {
   videoCover.style.display = 'none';
 }, { once: true });
 
 introVideo.addEventListener('ended', () => {
-  // إخفاء الغلاف فورًا وبدون أي تلاشي (fade) لتفادي ظهور خلفيته السوداء بين الفيديو والموقع
   introOverlay.style.transition = 'none';
   introOverlay.classList.add('hidden');
   document.body.classList.remove('intro-active');
@@ -779,7 +776,6 @@ function updateCountdown(){
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
 
 /* =============== RSVP ATTEND TOGGLE =============== */
 document.querySelectorAll('.attend-btn').forEach(btn=>{
